@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-3xl mx-auto p-6">
+  <a href="{% url 'dashboard' %}" class="inline-block mb-4 text-sm text-blue-600 hover:underline">← Volver al Dashboard</a>
+  <h1 class="text-2xl font-bold mb-4">Perfil de {{ cliente.nombre }} {{ cliente.apellido }}</h1>
+
+  <div class="bg-white shadow rounded p-4 mb-6">
+    <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+    <p><strong>Email:</strong> {{ cliente.email|default:"No especificado" }}</p>
+    <p><strong>Fecha de nacimiento:</strong> {{ cliente.fecha_nacimiento|date:"d/m/Y"|default:"No especificado" }}</p>
+    <p><strong>Puntos:</strong> {{ cliente.puntos }}</p>
+    <a href="{{ cliente.whatsapp_link }}" target="_blank" class="inline-block mt-3 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">📲 Enviar WhatsApp</a>
+    <a href="{% url 'cliente_editar' cliente.id %}" class="inline-block mt-3 ml-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">✏️ Editar Cliente</a>
+    <a href="{% url 'cliente_eliminar' cliente.id %}" class="inline-block mt-3 ml-2 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">🗑 Eliminar Cliente</a>
+  </div>
+
+  <h2 class="text-xl font-semibold mb-2">Historial de Visitas</h2>
+  {% if visitas %}
+    <table class="min-w-full bg-white rounded shadow">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="text-left px-4 py-2">Fecha</th>
+          <th class="text-left px-4 py-2">Descripción</th>
+          <th class="text-left px-4 py-2">Monto</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for visita in visitas %}
+        <tr class="border-t">
+          <td class="px-4 py-2">{{ visita.fecha }}</td>
+          <td class="px-4 py-2">{{ visita.descripcion }}</td>
+          <td class="px-4 py-2">Gs {{ visita.monto }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No hay visitas registradas aún.</p>
+  {% endif %}
+</div>
+{% endblock %}

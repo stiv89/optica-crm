@@ -1,0 +1,34 @@
+
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-5xl mx-auto p-6">
+  <a href="{% url 'dashboard' %}" class="inline-block mb-4 text-sm text-blue-600 hover:underline">← Volver al Dashboard</a>
+  <h1 class="text-2xl font-bold mb-4">Historial de Visitas</h1>
+
+  {% if visitas %}
+    <table class="min-w-full bg-white rounded shadow">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="text-left px-4 py-2">Cliente</th>
+          <th class="text-left px-4 py-2">Fecha</th>
+          <th class="text-left px-4 py-2">Descripción</th>
+          <th class="text-left px-4 py-2">Monto</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for visita in visitas %}
+        <tr class="border-t">
+          <td class="px-4 py-2">{{ visita.cliente.nombre }} {{ visita.cliente.apellido }}</td>
+          <td class="px-4 py-2">{{ visita.fecha }}</td>
+          <td class="px-4 py-2">{{ visita.descripcion }}</td>
+          <td class="px-4 py-2">Gs {{ visita.monto }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No hay visitas registradas aún.</p>
+  {% endif %}
+</div>
+{% endblock %}

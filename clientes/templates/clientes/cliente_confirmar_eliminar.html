@@ -1,0 +1,16 @@
+
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-xl mx-auto p-6 bg-white shadow rounded text-center">
+  <h1 class="text-xl font-bold mb-4">¿Eliminar Cliente?</h1>
+  <p>Estás a punto de eliminar al cliente <strong>{{ cliente.nombre }} {{ cliente.apellido }}</strong>.</p>
+  <p class="text-red-600 mt-2">Esta acción no se puede deshacer.</p>
+
+  <form method="post" class="mt-6 flex justify-center gap-4">
+    {% csrf_token %}
+    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Sí, eliminar</button>
+    <a href="{% url 'cliente_detalle' cliente.id %}" class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-5xl mx-auto p-6">
+  <a href="{% url 'dashboard' %}" class="inline-block mb-4 text-sm text-blue-600 hover:underline">← Volver al Dashboard</a>
+  <h1 class="text-2xl font-bold mb-4">Lista de Clientes</h1>
+
+  {% if messages %}
+    <div class="mb-4">
+      {% for message in messages %}
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% if clientes %}
+    <table class="min-w-full bg-white rounded shadow">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="text-left px-4 py-2">Nombre</th>
+          <th class="text-left px-4 py-2">Teléfono</th>
+          <th class="text-left px-4 py-2">Puntos</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cliente in clientes %}
+        <tr class="border-t">
+          <td class="px-4 py-2">
+            <a href="{% url 'cliente_detalle' cliente.id %}" class="text-blue-600 underline">
+              {{ cliente.nombre }} {{ cliente.apellido }}
+            </a>
+          </td>
+          <td class="px-4 py-2">{{ cliente.telefono }}</td>
+          <td class="px-4 py-2">{{ cliente.puntos }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No hay clientes registrados aún.</p>
+  {% endif %}
+</div>
+{% endblock %}

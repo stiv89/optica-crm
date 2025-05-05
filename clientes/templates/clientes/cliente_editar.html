@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-xl mx-auto p-6 bg-white shadow rounded">
+  <a href="{% url 'dashboard' %}" class="inline-block mb-4 text-sm text-blue-600 hover:underline">← Volver al Dashboard</a>
+  <h1 class="text-2xl font-bold mb-4">Editar Cliente</h1>
+
+  {% if messages %}
+    <div class="mb-4">
+      {% for message in messages %}
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <form method="post" class="grid gap-4">
+    {% csrf_token %}
+    <label>
+      Nombre:
+      <input type="text" name="nombre" value="{{ cliente.nombre }}" required class="w-full border border-gray-300 rounded p-2">
+    </label>
+    <label>
+      Apellido:
+      <input type="text" name="apellido" value="{{ cliente.apellido }}" required class="w-full border border-gray-300 rounded p-2">
+    </label>
+    <label>
+      Teléfono:
+      <input type="text" name="telefono" value="{{ cliente.telefono }}" required class="w-full border border-gray-300 rounded p-2">
+    </label>
+    <label>
+      Email (opcional):
+      <input type="email" name="email" value="{{ cliente.email }}" class="w-full border border-gray-300 rounded p-2">
+    </label>
+    <label>
+      Fecha de nacimiento (opcional):
+      <input type="date" name="fecha_nacimiento" value="{{ cliente.fecha_nacimiento|date:'Y-m-d' }}" class="w-full border border-gray-300 rounded p-2">
+    </label>
+    <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">Guardar Cambios</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Óptica CRM</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col justify-center items-center bg-cover bg-center" style="background-image: url('https://static.vecteezy.com/system/resources/previews/014/435/038/non_2x/ophthalmology-optometry-hand-drawn-seamless-pattern-contact-lenses-eye-drops-and-glasses-in-doodle-style-optometry-doodle-pattern-illustration-on-blue-background-vector.jpg');">
+  <div class="w-full max-w-4xl mx-auto bg-white/30 backdrop-blur-md shadow-xl rounded-2xl p-6 border border-white/30">
+    {% if user.is_authenticated %}
+      <div class="mb-6 text-center">
+        <div class="inline-flex items-center gap-3 px-6 py-2 bg-white/50 backdrop-blur border border-gray-200 rounded-full shadow text-sm text-gray-700">
+          <span>Bienvenido, <strong>{{ user.username }}</strong></span>
+          <form method="post" action="{% url 'logout' %}" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="text-blue-600 hover:underline">Cerrar sesión</button>
+          </form>
+        </div>
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </div>
+</div>
+<div id="logout-loader" class="fixed inset-0 bg-white/70 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+  <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-500 border-solid"></div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const logoutForm = document.querySelector('form[action="{% url "logout" %}"]');
+    if (logoutForm) {
+      logoutForm.addEventListener("submit", function () {
+        const loader = document.getElementById("logout-loader");
+        if (loader) loader.classList.remove("hidden");
+      });
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-xl mx-auto p-6 bg-white/40 backdrop-blur-md border border-gray-200 shadow-xl rounded-xl">
+  <a href="{% url 'dashboard' %}" class="inline-block mb-4 text-sm text-blue-600 hover:underline">← Volver al Dashboard</a>
+  <h1 class="text-2xl font-bold mb-4">Registrar Nuevo Cliente</h1>
+
+  {% if messages %}
+    <div class="mb-4">
+      {% for message in messages %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <form method="post" class="grid gap-4">
+    {% csrf_token %}
+    <label>
+      Nombre:
+      <input type="text" name="nombre" required class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white/60">
+    </label>
+    <label>
+      Apellido:
+      <input type="text" name="apellido" required class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white/60">
+    </label>
+    <label>
+      Teléfono:
+      <input type="text" name="telefono" required class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white/60">
+    </label>
+    <label>
+      Email (opcional):
+      <input type="email" name="email" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white/60">
+    </label>
+    <label>
+      Fecha de nacimiento (opcional):
+      <input type="date" name="fecha_nacimiento" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white/60">
+    </label>
+    <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded-full hover:bg-blue-700 shadow-md transition">Registrar</button>
+  </form>
+</div>
+{% endblock %}
