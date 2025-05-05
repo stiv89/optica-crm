@@ -128,6 +128,7 @@ LOGIN_REDIRECT_URL = '/'
 
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://web-production-55024.up.railway.app'
+    'https://web-production-55024.up.railway.app',
+    'https://buenavision.digitaparaguay.tech',
 ]
 
