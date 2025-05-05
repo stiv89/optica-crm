@@ -4,6 +4,16 @@ import os
 import sys
 
 
+def create_admin_user():
+    import django
+    django.setup()
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser('admin', 'admin@example.com', 'admin')
+        print("✅ Superusuario 'admin' creado automáticamente")
+
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'optica_crm.settings')
@@ -15,15 +25,8 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-    from django.contrib.auth import get_user_model
-    try:
-        User = get_user_model()
-        if not User.objects.filter(username='admin').exists():
-            User.objects.create_superuser('admin', 'admin@example.com', 'admin')
-            print("✅ Superusuario 'admin' creado automáticamente")
-    except Exception as e:
-        print(f"❌ Error al crear superusuario: {e}")
     execute_from_command_line(sys.argv)
+    create_admin_user()
 
 
 if __name__ == '__main__':
