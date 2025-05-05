@@ -127,8 +127,7 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 
 
-# CSRF trusted origins based on allowed hosts
 CSRF_TRUSTED_ORIGINS = [
-    'https://' + h for h in ALLOWED_HOSTS if not h.startswith('http')
+    'https://web-production-55024.up.railway.app'
 ]
 
