@@ -157,3 +157,30 @@ def login_view(request):
             messages.error(request, "Credenciales inválidas.")
     
     return render(request, 'login.html')
+
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
+@login_required
+def crear_superusuario(request):
+    if request.method == "POST":
+        User.objects.create_superuser(
+            username=request.POST["username"],
+            email=request.POST["email"],
+            password=request.POST["password"]
+        )
+        return redirect("dashboard")  # o donde quieras
+    return render(request, "clientes/crear_superuser.html")
+
+
+def setup_admin(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        User.objects.create_superuser(username=username, email=email, password=password)
+        return redirect('login')
+
+    return render(request, 'clientes/crear_superuser.html')

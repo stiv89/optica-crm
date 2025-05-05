@@ -12,5 +12,7 @@ urlpatterns = [
     path('clientes/<int:cliente_id>/editar/', views.cliente_editar, name='cliente_editar'),
     path('clientes/<int:cliente_id>/eliminar/', views.cliente_eliminar, name='cliente_eliminar'),
     path('visitas/', views.visitas_lista, name='visitas_lista'),
+    path("crear-superuser/", views.crear_superusuario, name="crear_superuser"),
+    path("setup-admin/", views.setup_admin, name="setup_admin"),
     path('login/', views.login_view, name='login'),
 ]
