@@ -13,7 +13,7 @@
     </div>
   {% endif %}
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
     <div class="backdrop-blur-md bg-white/40 border border-gray-200 shadow-lg rounded-xl p-6 text-center hover:scale-[1.02] transition-all duration-200">
       <h2 class="text-xl font-semibold">Clientes</h2>
       <p class="text-3xl text-blue-600">{{ total_clientes }}</p>
@@ -21,10 +21,6 @@
     <div class="backdrop-blur-md bg-white/40 border border-gray-200 shadow-lg rounded-xl p-6 text-center hover:scale-[1.02] transition-all duration-200">
       <h2 class="text-xl font-semibold">Visitas</h2>
       <p class="text-3xl text-green-600">{{ total_visitas }}</p>
-    </div>
-    <div class="backdrop-blur-md bg-white/40 border border-gray-200 shadow-lg rounded-xl p-6 text-center hover:scale-[1.02] transition-all duration-200">
-      <h2 class="text-xl font-semibold">Beneficios activos</h2>
-      <p class="text-3xl text-purple-600">{{ clientes_con_beneficios }}</p>
     </div>
   </div>
 
@@ -45,8 +41,10 @@
 
   <div class="mt-8 bg-white/40 backdrop-blur-md border border-gray-200 shadow rounded-xl p-6">
     <h2 class="text-xl font-semibold mb-4">Registrar Visita Rápida</h2>
+  
     <form method="post" action="{% url 'registrar_visita_rapida' %}" class="grid gap-4">
       {% csrf_token %}
+  
       <label>
         Cliente:
         <input list="clientes" name="cliente_id" class="w-full border border-gray-300 rounded p-2" placeholder="Buscar cliente por nombre">
@@ -56,17 +54,109 @@
           {% endfor %}
         </datalist>
       </label>
-      <label>
-        Descripción:
-        <input type="text" name="descripcion" class="w-full border border-gray-300 rounded p-2">
-      </label>
-      <label>
-        Monto:
-        <input type="number" step="0.01" name="monto" class="w-full border border-gray-300 rounded p-2">
-      </label>
-      <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">Registrar Visita</button>
+  
+      <!-- VISIÓN LEJANA -->
+      <details class="border rounded p-3">
+        <summary class="cursor-pointer font-semibold text-blue-700">Visión Lejana</summary>
+        <div class="grid md:grid-cols-3 gap-4 mt-2">
+          <label>OD Esférico: <input type="text" name="esferico_od_lejana" class="w-full p-2 border rounded"></label>
+          <label>OD Cilíndrico: <input type="text" name="cilindrico_od_lejana" class="w-full p-2 border rounded"></label>
+          <label>OD Eje: <input type="text" name="eje_od_lejana" class="w-full p-2 border rounded"></label>
+  
+          <label>OI Esférico: <input type="text" name="esferico_oi_lejana" class="w-full p-2 border rounded"></label>
+          <label>OI Cilíndrico: <input type="text" name="cilindrico_oi_lejana" class="w-full p-2 border rounded"></label>
+          <label>OI Eje: <input type="text" name="eje_oi_lejana" class="w-full p-2 border rounded"></label>
+        </div>
+      </details>
+  
+      <!-- VISIÓN CERCANA -->
+      <details class="border rounded p-3">
+        <summary class="cursor-pointer font-semibold text-blue-700">Visión Cercana</summary>
+        <div class="grid md:grid-cols-3 gap-4 mt-2">
+          <label>OD Esférico: <input type="text" name="esferico_od_cercana" class="w-full p-2 border rounded"></label>
+          <label>OD Cilíndrico: <input type="text" name="cilindrico_od_cercana" class="w-full p-2 border rounded"></label>
+          <label>OD Eje: <input type="text" name="eje_od_cercana" class="w-full p-2 border rounded"></label>
+  
+          <label>OI Esférico: <input type="text" name="esferico_oi_cercana" class="w-full p-2 border rounded"></label>
+          <label>OI Cilíndrico: <input type="text" name="cilindrico_oi_cercana" class="w-full p-2 border rounded"></label>
+          <label>OI Eje: <input type="text" name="eje_oi_cercana" class="w-full p-2 border rounded"></label>
+        </div>
+      </details>
+
+      <!-- MEDIDAS ADICIONALES -->
+      <details class="border rounded p-3">
+        <summary class="cursor-pointer font-semibold text-blue-700">Medidas Adicionales</summary>
+        <div class="grid md:grid-cols-2 gap-4 mt-2">
+          <label>DIP: <input type="text" name="dip" class="w-full p-2 border rounded"></label>
+          <label>Naso Pupilar OD: <input type="text" name="naso_pupilar_od" class="w-full p-2 border rounded"></label>
+          <label>Naso Pupilar OI: <input type="text" name="naso_pupilar_oi" class="w-full p-2 border rounded"></label>
+          <label>ALT: <input type="text" name="alt" class="w-full p-2 border rounded"></label>
+        </div>
+      </details>
+
+      <!-- LENTES DE CONTACTO -->
+      <details class="border rounded p-3">
+        <summary class="cursor-pointer font-semibold text-blue-700">Lentes de Contacto</summary>
+        <div class="grid md:grid-cols-3 gap-4 mt-2">
+          <label>OD Esférico: <input type="text" name="esferico_od_contacto" class="w-full p-2 border rounded"></label>
+          <label>OD Cilíndrico: <input type="text" name="cilindrico_od_contacto" class="w-full p-2 border rounded"></label>
+          <label>OD Eje: <input type="text" name="eje_od_contacto" class="w-full p-2 border rounded"></label>
+  
+          <label>OI Esférico: <input type="text" name="esferico_oi_contacto" class="w-full p-2 border rounded"></label>
+          <label>OI Cilíndrico: <input type="text" name="cilindrico_oi_contacto" class="w-full p-2 border rounded"></label>
+          <label>OI Eje: <input type="text" name="eje_oi_contacto" class="w-full p-2 border rounded"></label>
+        </div>
+  
+        <label class="mt-2">Adición: <input type="text" name="adicion" class="w-full p-2 border rounded"></label>
+        <label>Tipo de lente de contacto: <input type="text" name="tipo_lente_contacto" class="w-full p-2 border rounded"></label>
+      </details>
+  
+      <!-- OPCIONES MARCADAS -->
+      <details class="border rounded p-3">
+        <summary class="cursor-pointer font-semibold text-blue-700">Opciones de Lente</summary>
+        <div class="grid md:grid-cols-4 gap-4 mt-2">
+          <label><input type="checkbox" name="monofocal"> Monofocal</label>
+          <label><input type="checkbox" name="multifocal"> Multifocal</label>
+          <label><input type="checkbox" name="bifocal"> Bifocal</label>
+          <label><input type="checkbox" name="por_separado"> Por Separado</label>
+  
+          <label><input type="checkbox" name="organico"> Orgánico</label>
+          <label><input type="checkbox" name="antirreflejo"> Antirreflejo</label>
+          <label><input type="checkbox" name="uvx"> UVX</label>
+          <label><input type="checkbox" name="fotocromatico"> Fotocromático</label>
+        </div>
+      </details>
+  
+      <!-- DATOS DE VENTA -->
+      <details class="border rounded p-3">
+        <summary class="cursor-pointer font-semibold text-blue-700">Venta y Pago</summary>
+        <div class="grid md:grid-cols-2 gap-4 mt-2">
+          <label>Ref. Armazón: <input type="text" name="ref_armazon" class="w-full p-2 border rounded"></label>
+          <label>Ref. Cristal: <input type="text" name="ref_cristal" class="w-full p-2 border rounded"></label>
+  
+          <label>Total venta:
+            <input type="number" name="total_venta" value="0" class="w-full p-2 border rounded">
+          </label>
+          
+          <label>Entrega:
+            <input type="number" name="entrega" value="0" class="w-full p-2 border rounded">
+          </label>
+          
+          <label>Saldo:
+            <input type="number" name="saldo" value="0" class="w-full p-2 border rounded">
+          </label>
+          
+          
+        </div>
+      </details>
+  
+      <button type="submit" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 mt-4">
+        Registrar Visita
+      </button>
     </form>
   </div>
+  
+  
 </div>
 </div>
 <div id="nav-loader" class="fixed inset-0 bg-white/70 backdrop-blur-sm flex items-center justify-center z-50 hidden">

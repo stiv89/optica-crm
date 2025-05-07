@@ -50,26 +50,57 @@ def clientes_con_beneficios(request):
 def registrar_visita_rapida(request):
     if request.method == 'POST':
         cliente_id = request.POST.get('cliente_id')
-        descripcion = request.POST.get('descripcion', '')
-        monto = request.POST.get('monto', 0)
 
         cliente = get_object_or_404(Cliente, pk=cliente_id)
 
+        # Campos de receta oftalmológica
+        campos = [
+            'esferico_od_lejana', 'cilindrico_od_lejana', 'eje_od_lejana',
+            'esferico_oi_lejana', 'cilindrico_oi_lejana', 'eje_oi_lejana',
+            'esferico_od_cercana', 'cilindrico_od_cercana', 'eje_od_cercana',
+            'esferico_oi_cercana', 'cilindrico_oi_cercana', 'eje_oi_cercana',
+            'esferico_od_contacto', 'cilindrico_od_contacto', 'eje_od_contacto',
+            'esferico_oi_contacto', 'cilindrico_oi_contacto', 'eje_oi_contacto',
+            'adicion', 'tipo_lente_contacto',
+            'ref_armazon', 'ref_cristal',
+            'dip', 'naso_pupilar_od', 'naso_pupilar_oi', 'alt',
+        ]
+
+        data = {campo: request.POST.get(campo, '') for campo in campos}
         try:
-            monto = float(monto)
-            if monto < 0:
-                messages.error(request, 'El monto no puede ser negativo.')
-                return redirect('dashboard')
+            total_venta = float(request.POST.get('total_venta') or 0)
+            entrega = float(request.POST.get('entrega') or 0)
+            saldo = float(request.POST.get('saldo') or 0)
         except ValueError:
-            messages.error(request, 'Monto inválido.')
+            messages.error(request, 'Uno o más valores numéricos son inválidos.')
             return redirect('dashboard')
 
-        Visita.objects.create(cliente=cliente, descripcion=descripcion, monto=monto)
+        # Campos numéricos adicionales
+        try:
+            total_venta = float(request.POST.get('total_venta', 0))
+            entrega = float(request.POST.get('entrega', 0))
+            saldo = float(request.POST.get('saldo', 0))
+        except ValueError:
+            messages.error(request, 'Uno o más campos numéricos son inválidos.')
+            return redirect('dashboard')
+
+        # Campos booleanos (checkboxes)
+        bool_campos = ['monofocal', 'multifocal', 'bifocal', 'por_separado', 'organico', 'antirreflejo', 'uvx', 'fotocromatico']
+        bool_data = {campo: request.POST.get(campo) == 'on' for campo in bool_campos}
+
+        # Crear la visita con todos los datos
+        Visita.objects.create(
+            cliente=cliente,
+            total_venta=total_venta,
+            entrega=entrega,
+            saldo=saldo,
+            **data,
+            **bool_data
+        )
 
         messages.success(request, 'Visita registrada correctamente.')
 
     return redirect('dashboard')
-
 
 # Ver lista de clientes
 @login_required
@@ -108,6 +139,12 @@ def clientes_nuevo(request):
 def visitas_lista(request):
     visitas = Visita.objects.select_related('cliente').order_by('-fecha')
     return render(request, 'clientes/visitas_lista.html', {'visitas': visitas})
+
+@login_required
+def detalle_visita(request, visita_id):
+    visita = get_object_or_404(Visita, id=visita_id)
+    return render(request, 'clientes/visitas_detalle.html', {'visita': visita})
+
 
 
 # Vista para editar los datos de un cliente

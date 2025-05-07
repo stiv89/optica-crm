@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-5xl mx-auto p-6">
+  <h1 class="text-2xl font-bold mb-4">Detalle de Visita</h1>
+
+  <div class="bg-white border shadow rounded-xl p-6 space-y-6">
+
+    <div>
+      <h2 class="text-lg font-semibold mb-2">Información General</h2>
+      <p><strong>Cliente:</strong> {{ visita.cliente.nombre }} {{ visita.cliente.apellido }}</p>
+      <p><strong>Fecha:</strong> {{ visita.fecha }}</p>
+      <p><strong>Total Venta:</strong> Gs {{ visita.total_venta }}</p>
+      <p><strong>Entrega:</strong> Gs {{ visita.entrega }}</p>
+      <p><strong>Saldo:</strong> Gs {{ visita.saldo }}</p>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-semibold mb-2">Visión Lejana</h2>
+      <p><strong>OD:</strong> {{ visita.esferico_od_lejana }}/{{ visita.cilindrico_od_lejana }} / {{ visita.eje_od_lejana }}</p>
+      <p><strong>OI:</strong> {{ visita.esferico_oi_lejana }}/{{ visita.cilindrico_oi_lejana }} / {{ visita.eje_oi_lejana }}</p>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-semibold mb-2">Visión Cercana</h2>
+      <p><strong>OD:</strong> {{ visita.esferico_od_cercana }}/{{ visita.cilindrico_od_cercana }} / {{ visita.eje_od_cercana }}</p>
+      <p><strong>OI:</strong> {{ visita.esferico_oi_cercana }}/{{ visita.cilindrico_oi_cercana }} / {{ visita.eje_oi_cercana }}</p>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-semibold mb-2">Lentes de Contacto</h2>
+      <p><strong>OD:</strong> {{ visita.esferico_od_contacto }}/{{ visita.cilindrico_od_contacto }} / {{ visita.eje_od_contacto }}</p>
+      <p><strong>OI:</strong> {{ visita.esferico_oi_contacto }}/{{ visita.cilindrico_oi_contacto }} / {{ visita.eje_oi_contacto }}</p>
+      <p><strong>Adición:</strong> {{ visita.adicion }}</p>
+      <p><strong>Tipo de lente de contacto:</strong> {{ visita.tipo_lente_contacto }}</p>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-semibold mb-2">Medidas</h2>
+      <p><strong>DIP:</strong> {{ visita.dip }}</p>
+      <p><strong>Naso Pupilar OD:</strong> {{ visita.naso_pupilar_od }}</p>
+      <p><strong>Naso Pupilar OI:</strong> {{ visita.naso_pupilar_oi }}</p>
+      <p><strong>ALT:</strong> {{ visita.alt }}</p>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-semibold mb-2">Lentes y Tratamientos</h2>
+      <ul class="list-disc list-inside">
+        {% if visita.monofocal %}<li>Monofocal</li>{% endif %}
+        {% if visita.multifocal %}<li>Multifocal</li>{% endif %}
+        {% if visita.bifocal %}<li>Bifocal</li>{% endif %}
+        {% if visita.por_separado %}<li>Por separado</li>{% endif %}
+        {% if visita.organico %}<li>Orgánico</li>{% endif %}
+        {% if visita.antirreflejo %}<li>Antirreflejo</li>{% endif %}
+        {% if visita.uvx %}<li>UVX</li>{% endif %}
+        {% if visita.fotocromatico %}<li>Fotocromático</li>{% endif %}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-lg font-semibold mb-2">Referencias</h2>
+      <p><strong>Armazón:</strong> {{ visita.ref_armazon }}</p>
+      <p><strong>Cristal:</strong> {{ visita.ref_cristal }}</p>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
