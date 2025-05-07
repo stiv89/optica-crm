@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+
+# Si usás Postgres y hacés dumps temporales
+*.sql
+
+# Archivos de entorno
+.env
+.env.*
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de compilación y distribución
+build/
+dist/
+*.egg-info/
+
+# Migrations que no querés trackear globalmente (opcional)
+# **/migrations/*.py
+# **/migrations/*.pyc
+
+# node (si usás npm para manejar assets)
+node_modules/
+
+# WeasyPrint (si genera archivos temporales)
+*.pdf
+*.tmp
